@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom'
 import { isValidEmail } from '../utils/helper'
 import ProfilePhotoSelector from '../components/ProfilePhotoSelector'
 import Input from 'costuminputg'
+import DashBoardLayout from '../components/DashBoardLayout'
+import { addUser } from '../utils/apiCall'
 
 const Register = () => {
   const [profilePic, setProfilePic] = useState(null)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState(null)
   const [success, setSuccess] = useState(null)
   const [loading, setLoading] = useState(false)
   const [adminInviteToken, setAdminInviteToken] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault()
-
+    console.log('submit')
     // Validate username
     if (!username) {
       setError('Please enter a username')
@@ -31,35 +31,23 @@ const Register = () => {
       return
     }
 
-    // Validate password
-    if (!password) {
-      setError('Please enter a password')
-      return
-    }
+    
 
-    // Validate confirm password
-    if (password !== confirmPassword) {
-      setError('Passwords do not match')
+    const response = await addUser(username, email, profilePic, adminInviteToken)
+    if (response.error) {
+      setError(response.error)
       return
     }
+    
 
     setLoading(true)
     setError(null)
     setSuccess(null)
 
-    // Simulate API call for registration
-    setTimeout(() => {
-      setLoading(false)
-      setSuccess('Registration successful!')
-      setProfilePic(null)
-      setUsername('')
-      setEmail('')
-      setPassword('')
-      setConfirmPassword('')
-    }, 2000)
+ 
   }
   return (
-    <AuthLayout>
+    <DashBoardLayout activeMenu={'Add Member'}>
       <div 
       className='w-full h-3/4 flex flex-col items-center justify-center'
       >
@@ -94,37 +82,25 @@ const Register = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Input
-            label= 'Password'
-            type='password'
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Input
-            label='Confirm Password'
-            type='password'
-            placeholder='Confirm Password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+          <Input 
+          label='Admin Invite Number'
+          type='text'
+          placeholder='Admin Invite Number'
+          value={adminInviteToken}
+          onChange={(e) => setAdminInviteToken(e.target.value)}
           />
           {error && <p className='text-red-500 text-sm'>{error}</p>}
           {success && <p className='text-green-500 text-sm'>{success}</p>}
           <button 
-          className='w-[38%] h-8 bg-blue-500 text-white rounded-md hover:bg-blue-600' 
+          className='w-[26%] h-8 bg-blue-500 text-white rounded-md hover:bg-blue-600' 
           type='submit' 
           disabled={loading}>
-            {loading ? 'Loading...' : 'Register'}
+            {loading ? 'Loading..' : 'Send Invite'}
           </button>
         </form>
       </div>
-      <div className='flex relative items-center  justify-center mt-16'>
-        <p className='text-sm relative text-gray-500'>Already have an account?</p>
-        <Link to='/login' className='text-sm text-blue-500 ml-2'>
-          Login
-        </Link>
-      </div>
-    </AuthLayout>
+      
+    </DashBoardLayout>
   )
 }
 

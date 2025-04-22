@@ -4,8 +4,8 @@ import { API_Paths } from "../utils/apiPaths";
 export const UserContext = createContext()
 export const ContextProvider = ({children}) => {
     const [user , setUser] = useState(null)
-    const [loading , setLoading] = useState(false)
-    console.log(user)
+    const [loading , setLoading] = useState(true)
+    // console.log(user)
 
     useEffect(() => {
 
@@ -53,8 +53,9 @@ export const ContextProvider = ({children}) => {
     }
 
     const handleLogout = () => {
-        setUser(null);
         localStorage.removeItem('token');
+        setUser(null);
+        
     }
 
 

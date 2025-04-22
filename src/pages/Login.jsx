@@ -85,13 +85,14 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           />
+          <p className='text-xs text-state-700 mt-[5px]'>Forgot password? <Link to='/forgot-password' className='text-blue-500'>Reset</Link></p>
         {error && <p className='text-red-500 text-sm'>{error}</p>}
         <button 
           type='submit' 
           className='w-[38%] h-8 bg-blue-500 text-white rounded-md hover:bg-blue-600'  
           >Login</button>
 
-        <p className='text-xs text-state-700 mt-[5px]'>Don't have an account? <Link to='/register' className='text-blue-500'>Register</Link></p>
+        {/* <p className='text-xs text-state-700 mt-[5px]'>Don't have an account? <Link to='/register' className='text-blue-500'>Register</Link></p> */}
         </form>
 
       </div>

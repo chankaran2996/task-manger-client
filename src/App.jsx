@@ -20,7 +20,10 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/login' element={<Login/>} />
-          <Route path='/register' element={<Register/>} />
+          <Route path='/forgot-password' element={<Login/>} />
+          <Route path='/reset-password' element={<Login/>} />
+          <Route path='/set-password' element={<Login/>} />
+          
           {/* Admin route */}
           <Route element={<PrivateRoute allowRoles={["admin"]} />}>
             <Route path='/admin/dashboard' element={<AdminDashboard />} />
@@ -33,6 +36,7 @@ const App = () => {
             <Route path='/user/dashboard' element={<UserDashboard />} />
             <Route path='/user/tasks' element={<MyTask />} />
             <Route path='/user/task-detials/:id' element={<ViewTaskDetalis />} />
+            <Route path='/register' element={<Register/>} />
             {/* <Route path='/admin/user' element={<ManageUser />} /> */}
           </Route>
 
