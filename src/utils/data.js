@@ -21,17 +21,17 @@ export const SIDE_MENU_DATA = [
         icon: LuSquarePlus ,
         path: '/admin/create-task',
     },
-    {
-        id: 4,
-        label: 'Team Member',
-        icon: LuUser,
-        path: '/admin/user',
-    },
+    // {
+    //     id: 4,
+    //     label: 'Team Member',
+    //     icon: LuUser,
+    //     path: '/admin/user',
+    // },
     {
         id: 6,
         label:"Add Member",
         icon: LuUserPlus ,
-        path: '/register',
+        path: '/admin/add-user',
         
     },
     {

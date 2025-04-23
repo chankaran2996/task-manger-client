@@ -182,7 +182,7 @@ export const getTaskById = async (taskId) => {
                 Authorization: `Bearer ${token}`,
             },
         });
-        if (!response.ok) {
+        if (!response) {
             throw new Error('Failed to fetch task details');
         }
         const data = await response.json();
@@ -193,7 +193,7 @@ export const getTaskById = async (taskId) => {
     }
 }
 
-const updateTaskById = async (taskId, taskData) => {
+export const updateTaskById = async (taskId, taskData) => {
     try {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -209,6 +209,92 @@ const updateTaskById = async (taskId, taskData) => {
         });
         if (!response.ok) {
             throw new Error('Failed to update task');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+export const setpassword = async (token, password) => {
+    try {
+        const response = await fetch(API_Paths.USER.SET_PASSWORD, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({  password }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to set password');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+export const forgetPassword = async (email) => {
+    try {
+        const response = await fetch(API_Paths.AUTH.FORGOT_PASSWORD, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to send reset link');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+export const resetPassword = async (token, password) => {
+    try {
+        const response = await fetch(`${API_Paths.AUTH.RESET_PASSWORD}${token}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({  password }),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to reset password');
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
+
+
+export const deleteTaskById = async (taskId) => {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('No token found');
+        }
+        const response = await fetch(`${API_Paths.TASKS.DELETE_TASK}${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete task');
         }
         const data = await response.json();
         return data;

@@ -3,21 +3,22 @@ const Base_URL = 'http://localhost:8000/'
 export const API_Paths = {
     AUTH: {
         LOGIN: `${Base_URL}api/login/`,
-        REGISTER: `${Base_URL}auth/register/`,
-        FORGOT_PASSWORD: `${Base_URL}auth/forgot-password/`,
-        RESET_PASSWORD: `${Base_URL}auth/reset-password/`,
+        // REGISTER: `${Base_URL}auth/register/`,
+        FORGOT_PASSWORD: `${Base_URL}api/forgot-password/`,
+        RESET_PASSWORD: `${Base_URL}api/reset-password/`,
     },
     USER: {
         PROFILE: `${Base_URL}api/profile/`,
         UPDATE_PROFILE: `${Base_URL}user/update-profile/`,
         CHANGE_PASSWORD: `${Base_URL}user/change-password/`,
+        SET_PASSWORD: `${Base_URL}api/set-password/`,
     },
     TASKS:{
         CREATE_TASK: `${Base_URL}api/task`,
         GET_TASKS: `${Base_URL}api/task`,
-        GET_TASK_DETAILS: `${Base_URL}api/`,
-        UPDATE_TASK: `${Base_URL}user/update-task/`,
-        DELETE_TASK: `${Base_URL}user/delete-task/`,
+        GET_TASK_DETAILS: `${Base_URL}api/task/`,
+        UPDATE_TASK: `${Base_URL}api/task/`,
+        DELETE_TASK: `${Base_URL}api/task/`,
         GET_DASHBOARD_DATA: `${Base_URL}api/task/dashboard-data`,
         GET_USER_DASHBOARD_DATA: `${Base_URL}user/dashboard/`,
     },

@@ -12,6 +12,9 @@ import MyTask from './pages/MyTask'
 import ViewTaskDetalis from './pages/ViewTaskDetalis'
 import { ContextProvider } from './context/UserContext'
 import { UserContext } from './context/UserContext'
+import SetPassword from './pages/SetPassword'
+import ForgetPassword from './pages/ForgetPassword'
+import ResetPassword from './pages/ResetPassword'
 
 const App = () => {
   return (
@@ -20,9 +23,9 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path='/login' element={<Login/>} />
-          <Route path='/forgot-password' element={<Login/>} />
-          <Route path='/reset-password' element={<Login/>} />
-          <Route path='/set-password' element={<Login/>} />
+          <Route path='/forgot-password' element={<ForgetPassword/>} />
+          <Route path='/reset-password/:token' element={<ResetPassword/>} />
+          <Route path='/set-password/:token' element={<SetPassword/>} />
           
           {/* Admin route */}
           <Route element={<PrivateRoute allowRoles={["admin"]} />}>
@@ -30,13 +33,14 @@ const App = () => {
             <Route path='/admin/task' element={<ManageTask />} />
             <Route path='/admin/create-task' element={<CreateTask />} />
             <Route path='/admin/user' element={<ManageUser />} />
+            <Route path='/admin/add-user' element={<Register/>} />
           </Route>
           {/* user route */}
-          <Route element={<PrivateRoute allowRoles={["admin"]} />}>
+          <Route element={<PrivateRoute allowRoles={["member"]} />}>
             <Route path='/user/dashboard' element={<UserDashboard />} />
             <Route path='/user/tasks' element={<MyTask />} />
             <Route path='/user/task-detials/:id' element={<ViewTaskDetalis />} />
-            <Route path='/register' element={<Register/>} />
+            
             {/* <Route path='/admin/user' element={<ManageUser />} /> */}
           </Route>
 

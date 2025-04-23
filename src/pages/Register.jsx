@@ -17,6 +17,7 @@ const Register = () => {
   const [adminInviteToken, setAdminInviteToken] = useState('')
 
   const handleSubmit = async(e) => {
+    setLoading(true)
     e.preventDefault()
     console.log('submit')
     // Validate username
@@ -40,9 +41,9 @@ const Register = () => {
     }
     
 
-    setLoading(true)
+    setLoading(false)
     setError(null)
-    setSuccess(null)
+    setSuccess('User added successfully')
 
  
   }

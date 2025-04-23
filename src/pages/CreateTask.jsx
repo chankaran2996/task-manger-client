@@ -1,10 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import DashBoardLayout from '../components/DashBoardLayout'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { LuTrash2 } from "react-icons/lu";
 import SelectUser from '../components/SelectUser';
 import TodoListInput from '../components/TodoListInput';
-import { createingTask } from '../utils/apiCall';
+import { createingTask, deleteTaskById, getTaskById, updateTaskById } from '../utils/apiCall';
+import moment from 'moment';
 
 const CreateTask = () => {
 
@@ -27,6 +28,7 @@ const CreateTask = () => {
   const [loading, setLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
   const [error, setError] = useState(null);
+  const [wt,setWt] = useState(false);
 
   const handleValueChange = (e) => {
     const { name, value } = e.target;
@@ -82,6 +84,8 @@ const CreateTask = () => {
     return;
   };
 
+
+
   const createTask = async () => {
     try {
       const response = await createingTask(taskData);
@@ -99,11 +103,79 @@ const CreateTask = () => {
     }
   };
 
-  const updateTask = async () => {};
+  const updateTask = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await updateTaskById( taskId.taskId , taskData);
+      if (response) {
+        setLoading(false);
+        clearTaskData();
+        navigate("/admin/task", { state: "Task Updated Successfully" });
+      } else {
+        setLoading(false);
+        setError("Failed to update task. Please try again.");
+      }
+    } catch (error) {
+      setLoading(false);
+      setError("Failed to update task. Please try again.");
+    }
+  };
+  // console.log(taskId.taskId)
+  const getTaskDetailsById = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await getTaskById(taskId.taskId);
+      console.log("Task details:", response);
+      if (response) {
+        setCurrentTask(response.task);
+        setTaskData({
+          title: response.task.title,
+          description: response.task.description,
+          priority: response.task.priority,
+          status: response.task.status,
+          dueDate: response.task.dueDate?
+          moment(response.task.dueDate).format("YYYY-MM-DD") : null,
+          assignedTo: response.task.assignedTo,
+          todoChecklist: response.task.todoCheckList,
+          attachments: response.task.attachments,
+        });
+        setLoading(false);  
+      }
+    } catch (error) {
+      setLoading(false);
+      setError("Failed to fetch task details. Please try again.");
+    }
+  };
 
-  const getTaskDetailsById = async () => {};
+  const deleteTask = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await deleteTaskById(taskId.taskId);
+      if (response) {
+        setLoading(false);
+        clearTaskData();
+        navigate("/admin/task", { state: "Task Deleted Successfully" });
+      } else {
+        setLoading(false);
+        setError("Failed to delete task. Please try again.");
+      }
+    } catch (error) {
+      setLoading(false);
+      setError("Failed to delete task. Please try again.");
+    }
+  };
 
-  const deleteTask = async () => {};
+
+  useEffect(() => {
+    if (taskId) {
+      setLoading(true);
+      getTaskDetailsById();
+    }
+  }
+  , [taskId]);
 
   return (
     <DashBoardLayout activeMenu={"Create Task"}>
@@ -123,7 +195,7 @@ const CreateTask = () => {
               {taskId && (
                 
                   <button 
-                  onClick={() => setOpenDeleteAlert(true)} 
+                  onClick={deleteTask} 
                   className='flex items-center justify-center gap-1.5 text-[13px]
                   font-medium text-rose-500 bg-rose-50 rounded px-2 py-1 border
                   border-rose-100 hover:bg-rose-300 cursor-pointer'
