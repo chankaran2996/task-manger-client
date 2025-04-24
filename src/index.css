@@ -18,7 +18,7 @@
   }
 }
 
-.input-box{
+/* .input-box{
   @apply flex w-full justify-between gap-3 text-sm text-black bg-slate-100/50 rounded px-4 py-3 mb-4 mt-3 border border-slate-200 outline-none;
 }
 
@@ -52,4 +52,4 @@
 
 .download-report-btn{
   @apply w-full flex items-center justify-center gap-1.5 text-xs font-medium md:text-sm font-medium text-primary whitespace-nowap bg-blue-50 border border-blue-100 rounded-lg px-4 py-2 cursor-pointer;
-}
+} */

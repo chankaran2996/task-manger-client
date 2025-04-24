@@ -5,7 +5,7 @@ import DashBoardLayout from '../components/DashBoardLayout';
 const UserDashboard = () => {
   useUserAuth();
   return (
-    <DashBoardLayout>
+    <DashBoardLayout activeMenu={"Dashboard"}>
       UserDashboard
     </DashBoardLayout>
   )
